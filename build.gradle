@@ -1,16 +1,43 @@
-plugins {
-    id 'java'
+buildscript {
+    ext {
+        springBootVersion = '2.0.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 group 'com.cloud'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-repositories {
-    mavenCentral()
-}
+    sourceCompatibility = 1.8
 
-dependencies {
-    
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        springCloudVersion = 'Finchley.SR1'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    dependencies {
+        implementation('org.springframework.boot:spring-boot-starter')
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+    }
 }
