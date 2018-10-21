@@ -1,5 +1,7 @@
 rootProject.name = 'cloud-training'
 include 'config-server'
 include 'eureka-server'
-include 'example-server1'
+include 'gateway-server'
+include 'auth-server'
+include 'resource-server'
 
